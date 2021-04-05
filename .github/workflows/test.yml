@@ -15,12 +15,19 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
 
+      postgres:
+        image: postgres:9.6
+        ports:
+          - 5432
+        env:
+          POSTGRES_PASSWORD: 123456
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - name: Setup PostgreSQL service
-        uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: '9.6'
-          postgresql password: '123456'
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -34,11 +41,13 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
       - name: Run Tests
-        run: mysql -s --user="$DPT_MYSQL_USER" --password="$DPT_MYSQL_PASS" --host="127.0.0.1" --port="$DPT_MYSQL_PORT" --execute="SELECT VERSION();"
+        run: psql -q -h 127.0.0.1 -U postgres -d postgres --command="SELECT version();"
         env:
           DPT_MYSQL_USER: "root"
           DPT_MYSQL_PASS: ""
-          DPT_POSTGRESQL_USER: "postgres"
-          DPT_POSTGRESQL_PASS: ""
-          PGPASSWORD: '123456'
           DPT_MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
+          DPT_POSTGRESQL_USER: "postgres"
+          DPT_POSTGRESQL_PASS: "123456"
+          DPT_POSTGRESQL_PORT: ${{ job.services.postgres.ports[5432] }}
+          PGPASSWORD: '123456'
+          

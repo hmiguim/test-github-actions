@@ -23,7 +23,7 @@ jobs:
           postgresql version: '9.6'
           postgresql user: postgres
       - name: Run Tests
-        run: telnet 127.0.0.1 3306
+        run: telnet 127.0.0.1 5432
         env:
           DPT_MYSQL_USER: "root"
           DPT_MYSQL_PASS: ""

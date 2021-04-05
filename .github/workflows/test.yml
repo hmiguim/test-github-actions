@@ -42,7 +42,7 @@ jobs:
             sleep 1
           done
       - name: Run Tests
-        run: psql -q -h 127.0.0.1 -d postgres --command="CREATE DATABASE test;"
+        run: psql -q -h 127.0.0.1 -U postgres -d postgres --command="CREATE DATABASE test;"
         env:
           DPT_MYSQL_USER: "root"
           DPT_MYSQL_PASS: ""

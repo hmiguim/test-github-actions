@@ -41,7 +41,7 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
       - name: Run Tests
-        run: psql -q -h 127.0.0.1 -U postgres -d postgres --command="SELECT version();"
+        run: psql -q -h 127.0.0.1 -U postgres -d postgres -p $DPT_POSTGRESQL_PORT --command="SELECT version();"
         env:
           DPT_MYSQL_USER: "root"
           DPT_MYSQL_PASS: ""

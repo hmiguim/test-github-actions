@@ -6,19 +6,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+
     steps:
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
-      - name: Set up MySQL
-        uses: mirromutth/mysql-action@v1.1
+      - name: Setup PostgreSQL service
+        uses: harmon758/postgresql-action@v1
         with:
-            mysql version: 5.7
-            mysql root password: 123456
-      #- name: Setup PostgreSQL service
-      #  uses: harmon758/postgresql-action@v1
-      #  with:
-      #    postgresql version: '9.6'
-      #    postgresql password: '123456'
+          postgresql version: '9.6'
+          postgresql password: '123456'
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -32,10 +34,11 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
       - name: Run Tests
-        run: "psql --version"
+        run: mysql -s --user="$DPT_MYSQL_USER" --password="$DPT_MYSQL_PASS" --host="127.0.0.1" --port="$DPT_MYSQL_PORT" --execute="SELECT VERSION();"
         env:
           DPT_MYSQL_USER: "root"
           DPT_MYSQL_PASS: ""
           DPT_POSTGRESQL_USER: "postgres"
           DPT_POSTGRESQL_PASS: ""
           PGPASSWORD: '123456'
+          PORT: ${{ job.services.mariadb.ports[3306] }}

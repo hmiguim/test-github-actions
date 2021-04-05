@@ -48,4 +48,5 @@ jobs:
           DPT_MYSQL_PASS: ""
           DPT_POSTGRESQL_USER: "postgres"
           DPT_POSTGRESQL_PASS: ""
+          PGPASSWORD: '123456'
           PORT: ${{ job.services.mariadb.ports[3306] }}

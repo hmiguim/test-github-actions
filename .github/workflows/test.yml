@@ -14,11 +14,11 @@ jobs:
         with:
             mysql version: 5.7
             mysql root password: 123456
-      - name: Setup PostgreSQL service
-        uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: '9.6'
-          postgresql password: '123456'
+      #- name: Setup PostgreSQL service
+      #  uses: harmon758/postgresql-action@v1
+      #  with:
+      #    postgresql version: '9.6'
+      #    postgresql password: '123456'
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -32,7 +32,7 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
       - name: Run Tests
-        run: "mysql --version"
+        run: "psql --version"
         env:
           DPT_MYSQL_USER: "root"
           DPT_MYSQL_PASS: ""

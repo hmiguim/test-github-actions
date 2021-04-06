@@ -2,7 +2,9 @@ name: "Release"
 
 on:
   push:
-    branches:
+    tags:
+      - "**"
+    branches-ignore:
       - "**"
 
 jobs:
@@ -15,22 +17,11 @@ jobs:
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -c2-)
-      - name: Create Release Notes
-        id: changelog
-        uses: docker://decathlon/release-notes-generator-action:2.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OUTPUT_FOLDER: temp_release_notes
-          USE_MILESTONE_TITLE: "true"
-      - name: List
-        run:
-          ls temp_release_notes
-  #    - name: Upload DBPTK Developer to release
-  #      uses: svenstaro/upload-release-action@v2
-  #      with:
-  #        repo_token: ${{ secrets.GITHUB_TOKEN }}
-  #        file: dbptk-core/target/dbptk-app-${{ steps.get_version.outputs.VERSION }}.jar
-  #        asset_name: dbptk-app-${{ steps.get_version.outputs.VERSION }}.jar
-  #        tag: ${{ github.ref }}
-  #        release_name: Version ${{ steps.get_version.outputs.VERSION }}
-  #        body: ${{ steps.changelog.outputs.changelog }}
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: file
+          asset_name: file
+          tag: ${{ github.ref }}
+          release_name: Version ${{ steps.get_version.outputs.VERSION }}

@@ -1,6 +1,9 @@
 name: "Trigger"
 
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - "staging"
 
 jobs:
   trigger:

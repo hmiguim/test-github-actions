@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: Trigger CD on DBPTK-Enterprise
         run: |
-          curl -XPOST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/hmiguim/test_trigger/dispatches --d '{"event_type": "test"}'
+          curl -XPOST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/hmiguim/test_trigger/dispatches -d '{"event_type": "test"}'

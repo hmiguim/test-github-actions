@@ -1,0 +1,16 @@
+name: "Trigger"
+
+on: workflow_dispatch
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger CD on DBPTK-Enterprise
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/hmiguim/test_trigger/dispatches \
+          -d '{"event_type":"event_type"}'

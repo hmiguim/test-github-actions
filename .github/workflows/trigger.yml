@@ -15,5 +15,5 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: hmiguim/test_trigger
-          event-type: my-event
+          event-type: staging
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'

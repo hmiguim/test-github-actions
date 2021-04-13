@@ -50,5 +50,6 @@ jobs:
         with:
           files: dist/*
           name: Version ${{ github.event.inputs.version }}
+          tag_name: ${{ github.event.inputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

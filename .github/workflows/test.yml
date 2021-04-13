@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dist/*
-          key: ${{ runner.os }}-${{ github.event.inputs.version }}
+          key: ${{ github.event.inputs.version }}
 
       - name: Build
         run: |
@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dist/*
-          key: ${{ runner.os }}-${{ github.event.inputs.version }}
+          key: ${{ github.event.inputs.version }}
       
       - name: List directories
         run: ls dist

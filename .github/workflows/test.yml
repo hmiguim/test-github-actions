@@ -23,25 +23,32 @@ jobs:
         uses: actions/cache@v2
         with:
           path: dist/*
-          key: ${{ github.event.inputs.version }}
+          key: ${{ runner.os }}-${{ github.event.inputs.version }}
 
       - name: Build
         run: |
           mkdir -p dist
           touch dist/file1-${{ runner.os }}
-          touch dist/file2--${{ runner.os }}
+          touch dist/file2-${{ runner.os }}
 
   job2:
     needs: [job1]
-    
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     
     steps:
       - name: Cache dist
         uses: actions/cache@v2
         with:
           path: dist/*
-          key: ${{ github.event.inputs.version }}
+          key: ${{ runner.os }}-${{ github.event.inputs.version }}
       
-      - name: List directories
-        run: ls dist
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          name: Version ${{ github.event.inputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

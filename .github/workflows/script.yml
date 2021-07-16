@@ -16,3 +16,7 @@ jobs:
       - name: Run shasum
         run: |
           shasum -a 256 file2
+
+      - name: Check jq
+        run: |
+         jq --version

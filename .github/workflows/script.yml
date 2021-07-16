@@ -21,4 +21,5 @@ jobs:
         run: |
          jq --version
       - name: Run script
-				run: bash build.sh
+        run: |
+          bash build.sh

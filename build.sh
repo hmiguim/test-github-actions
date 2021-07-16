@@ -19,8 +19,7 @@ if [ "${RESPONSE}" != "200" ]; then
     return 1
 fi
 
-API_CHECKSUM=$(cat $API_CHECKSUM_FILE |
-    jq -r --arg os $OS --arg jvm_impl $JVM_IMPL --arg arch $ARCH --arg image_type $IMAGE_TYPE '.[].binary | select(.image_type == $image_type) | select(.heap_size == "normal") | select(.architecture == $arch) | select(.jvm_impl == $jvm_impl) | select(.os == $os) | .package.checksum')
+API_CHECKSUM=$(jq -r --arg os $OS --arg jvm_impl $JVM_IMPL --arg arch $ARCH --arg image_type $IMAGE_TYPE '.[].binary | select(.image_type == $image_type) | select(.heap_size == "normal") | select(.architecture == $arch) | select(.jvm_impl == $jvm_impl) | select(.os == $os) | .package.checksum' $API_CHECKSUM_FILE)
 
 if [ $API_CHECKSUM == $DL_CHECKSUM ]; then
     echo "OK"

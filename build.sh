@@ -5,9 +5,10 @@ set -ex
 API_CHECKSUM_FILE=/tmp/assets.json
 
 OS="linux"
-JVM_IMPL="jre"
+JVM_IMPL="hotspot"
 ARCH="x64" 
-IMAGE_TYPE="hotspot"
+HEAP_SIZE="normal"
+IMAGE_TYPE="jre"
 DL_CHECKSUM="21345"
 
 
@@ -19,9 +20,7 @@ if [ "${RESPONSE}" != "200" ]; then
     return 1
 fi
 
-cat $API_CHECKSUM_FILE
-
-API_CHECKSUM=$(jq -r --arg os $OS --arg jvm_impl $JVM_IMPL --arg arch $ARCH --arg image_type $IMAGE_TYPE '.[].binary | select(.image_type == $image_type) | select(.heap_size == "normal") | select(.architecture == $arch) | select(.jvm_impl == $jvm_impl) | select(.os == $os) | .package.checksum' $API_CHECKSUM_FILE)
+API_CHECKSUM=$(cat $API_CHECKSUM_FILE | jq -r --arg os $OS --arg jvm_impl $JVM_IMPL --arg arch $ARCH --arg image_type $IMAGE_TYPE --arg heap_size $HEAP_SIZE '.[].binary | select(.image_type == $image_type) | select(.heap_size == $heap_size) | select(.architecture == $arch) | select(.jvm_impl == $jvm_impl) | select(.os == $os) | .package.checksum')
 
 if [ $API_CHECKSUM == $DL_CHECKSUM ]; then
     echo "OK"

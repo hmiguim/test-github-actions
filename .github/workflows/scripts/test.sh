@@ -1,8 +1,6 @@
 #!/bin/bash
 
-$FILE="./file2"
-
 if [ "$OS" == "Windows" ]; then
-    SHASUM=$(sha256sum $FILE)
+    SHASUM=$(echo "adasdadsa" | sha256sum)
     echo $SHASUM
 fi

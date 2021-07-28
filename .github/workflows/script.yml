@@ -15,7 +15,7 @@ jobs:
 
       - name: Run shasum
         run: |
-          ./scripts/test.sh
+          bash ./scripts/test.sh
         env:
           OS: ${{ runner.os }}
 

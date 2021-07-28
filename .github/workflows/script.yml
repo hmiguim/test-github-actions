@@ -15,7 +15,9 @@ jobs:
 
       - name: Run shasum
         run: |
-          sha256sum file2
+          ./scripts/test.sh
+        env:
+          OS: ${{ runner.os }}
 
       - name: Check jq
         run: |

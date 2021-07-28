@@ -1,6 +1,9 @@
 #!/bin/bash
 
-if [ "$OS" == "Windows" ]; then
+if [ "$OS" == "macOS" ]; then
+    SHASUM=$(echo "adasdadsa" | shasum -a 256)
+else
     SHASUM=$(echo "adasdadsa" | sha256sum)
-    echo $SHASUM
-fi
+fi 
+
+echo $SHASUM

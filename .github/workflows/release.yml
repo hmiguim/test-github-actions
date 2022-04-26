@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: npm install github-release-notes -g 
       - name: Gren
-        run: gren release -c .grenrc -d --tags=v1.3.0 --data-source=milestones --milestone-match="1.3.0" --override 
+        run: gren release -d --tags=v1.3.0 --data-source=milestones --milestone-match="1.3.0" --override 
         env:
           GREN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

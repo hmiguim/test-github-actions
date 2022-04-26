@@ -1,0 +1,24 @@
+name: 'Release'
+
+on:
+  push:
+    tags:
+      - "**"
+    branches-ignore:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm install github-release-notes -g 
+      - name: Gren
+        run: gren release -d --tags=v1.2.0 --data-source=milestones --milestone-match="1.2.0" --override 
+        env:
+          GREN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

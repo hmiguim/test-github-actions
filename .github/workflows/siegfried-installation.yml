@@ -10,6 +10,6 @@ jobs:
 
     steps:
       - name: Install dependencies
-          run: |
-            go install github.com/richardlehane/siegfried/cmd/sf@latest
-            sf -update
+        run: |
+          go install github.com/richardlehane/siegfried/cmd/sf@latest
+          sf -update

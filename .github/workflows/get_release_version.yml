@@ -16,6 +16,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get release version
-        run: echo "{result}={GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
+        run: echo "result={GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       - name: Print version
-        run: echo $GITHUB_OUTPUT
+        run: echo "${{ env.result }}"

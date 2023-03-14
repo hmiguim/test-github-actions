@@ -20,4 +20,4 @@ jobs:
       - name: Print version
         run: echo "${{ env.result }}"
       - name: Print ref
-        run: echo "${{ github.ref }}"
+        run: echo "${{ GITHUB_REF_NAME }}"

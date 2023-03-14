@@ -19,3 +19,5 @@ jobs:
         run: echo "result=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       - name: Print version
         run: echo "${{ env.result }}"
+      - name: Print ref
+        run: echo "${{ github.ref }}"

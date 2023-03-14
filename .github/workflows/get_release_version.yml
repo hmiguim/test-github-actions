@@ -10,13 +10,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Get release version
-        id: release_version
-        run: echo ::set-output name=result::${GITHUB_REF/refs\/tags\/v/}
+        run: echo "{result}={GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
       - name: Print version
-        run: echo ${{ steps.release_version.outputs.result }}
+        run: echo $GITHUB_OUTPUT

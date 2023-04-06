@@ -18,7 +18,7 @@ jobs:
       - name: Get release version
         run: | 
           echo "result=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
-          echo "major_version=$(cut -d '.' -f 1 <<< $GITHUB_REF)" >> $GITHUB_ENV
+          echo "major_version=$(cut -d '.' -f 1 <<< $GITHUB_REF_NAME)" >> $GITHUB_ENV
       - name: Print version
         run: echo "${{ env.result }}"
       - name: Print ref

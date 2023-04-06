@@ -24,5 +24,5 @@ jobs:
       - name: Print ref
         run: echo "${{ github.ref_name }}"
       - name: Major version
-        if: ${{ !contains(env.major_version, 'alpha') && !contains(env.major_version, 'beta') }}
+        if: ${{ !contains(env.github.ref_name, 'alpha') && !contains(env.github.ref_name, 'beta') }}
         run: echo "${{ env.major_version }}"

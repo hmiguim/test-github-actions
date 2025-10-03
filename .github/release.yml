@@ -1,20 +1,26 @@
-# .github/release.yml
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (e.g., 1.2.3)"
+        required: true
+        type: string
 
-changelog:
-  exclude:
-    labels:
-      - ignore-for-release
-    authors:
-      - octocat
-  categories:
-    - title: Breaking Changes 🛠
-      labels:
-        - Semver-Major
-        - breaking-change
-    - title: Exciting New Features 🎉
-      labels:
-        - Semver-Minor
-        - enhancement
-    - title: Other Changes
-      labels:
-        - "*"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up tags
+        run: |
+          echo "FULL_TAG=v${{ github.event.inputs.version }}" >> $GITHUB_ENV
+          echo "MAJOR_TAG=$(awk -F. '{print "v"$1}' <<< "${{ github.event.inputs.version }}")" >> $GITHUB_ENV
+          echo "MAJOR_MINOR_TAG=$(awk -F. '{print "v"$1"."$2}' <<< "${{ github.event.inputs.version }}")" >> $GITHUB_ENV
+
+      - name: Create Git tags
+        run: |
+          echo ${{env.FULL_TAG}}
+          echo ${{env.MAJOR_TAG}}
+          echo ${{env.MAJOR_MINOR_TAG}}
